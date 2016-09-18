@@ -1,0 +1,69 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Node{
+	int item;
+	Node* previous_node;
+	Node* next_node;
+}Node;
+
+Node* create_doubly_linked_list(){
+	return NULL;
+}
+
+Node* insert( Node* first, int item){
+	Node* new_node = (Node*) malloc(sizeof(Node));
+	new_node->item = item;
+	new_node->previous_node = NULL;
+	new_node->next_node = first;
+	
+	return new_node;
+}
+
+Node* search( Node* first, int item){
+	Node* p;
+	for( p = first; p != NULL ; p = p->next_node ){
+		if(p->item == item){
+			return p;
+		}
+	}
+	
+	return NULL;
+}
+
+Node* remove( Node* first , int item){
+	Node* current = first;
+	while(current->next != NULL && current->item != item){
+		current = current->next;
+	}
+
+	if(current == NULL){
+		return first;
+	}
+
+	if(current->previous_node == NULL){
+		first = current->next_node;
+	}
+
+	else {
+		current->previous_node->next_node = current->next_node;
+		current->next_node->previous_node = current->previous_node;	
+	}
+
+	free(current);
+	return first;
+}
+
+int is_empty( Node* first ){
+	return (first != NULL);
+}
+
+void print_doubly_linked_list( Node* first ){
+	Node *p;
+	for( p = first ; p != NULL ; p = p->next_node ){
+		printf("%d ", p->item);
+	}
+}
+
+
+	
